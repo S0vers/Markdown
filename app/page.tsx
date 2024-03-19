@@ -6,7 +6,13 @@ import "@mdxeditor/editor/style.css";
 const EditorComp = dynamic(() => import("./EditorComponent"), { ssr: false });
 
 const markdown = `
-Hello **world**!
+  * Item 1
+  * Item 2
+  * Item 3
+    * nested item
+
+  1. Item 1
+  2. Item 2
 `;
 
 export default function Home() {

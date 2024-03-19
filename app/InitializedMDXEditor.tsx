@@ -30,12 +30,31 @@ export default function InitializedMDXEditor({
   editorRef,
   ...props
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
+  async function imageUploadHandler(image: File) {
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log("Response status:", response.status); // Log the response status
+
+    if (response.ok) {
+      const { url } = await response.json();
+      return url;
+    } else {
+      console.error("Error uploading image:", response.statusText); // Log any errors
+      console.log("Failed to upload image");
+    }
+  }
   return (
     <MDXEditor
       plugins={[
-        headingsPlugin(),
         listsPlugin(),
         quotePlugin(),
+        headingsPlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
         toolbarPlugin({
@@ -54,17 +73,7 @@ export default function InitializedMDXEditor({
         }),
         tablePlugin(),
         linkDialogPlugin(),
-        listsPlugin(),
-        thematicBreakPlugin(),
-        imagePlugin({
-          imageUploadHandler: () => {
-            return Promise.resolve("https://picsum.photos/200/300");
-          },
-          imageAutocompleteSuggestions: [
-            "https://picsum.photos/200/300",
-            "https://picsum.photos/200",
-          ],
-        }),
+        imagePlugin({ imageUploadHandler }),
       ]}
       {...props}
       ref={editorRef}
