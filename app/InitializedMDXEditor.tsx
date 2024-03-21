@@ -51,6 +51,7 @@ export default function InitializedMDXEditor({
   }
   return (
     <MDXEditor
+      contentEditableClassName="prose"
       plugins={[
         listsPlugin(),
         quotePlugin(),

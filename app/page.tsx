@@ -2,19 +2,13 @@
 import dynamic from "next/dynamic";
 import { Suspense, useRef } from "react";
 import { ForwardRefEditor } from "./ForwardRedEditor";
-import "@mdxeditor/editor/style.css";
+import "../node_modules/@mdxeditor/editor/dist/style.css";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 
 const EditorComp = dynamic(() => import("./EditorComponent"), { ssr: false });
 
 const markdown = `
-  * Item 1
-  * Item 2
-  * Item 3
-    * nested item
-
-  1. Item 1
-  2. Item 2
+Start Typing Here
 `;
 
 export default function Home() {
@@ -31,6 +25,7 @@ export default function Home() {
       });
       if (response.ok) {
         console.log("Content saved successfully!");
+        alert("Content saved successfully!");
       } else {
         console.error("Failed to save content:", response.statusText);
       }
@@ -40,7 +35,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div>
       <br />
       <div style={{ border: "1px solid black" }}>
         <Suspense fallback={null}>
@@ -48,6 +43,6 @@ export default function Home() {
           <button onClick={handleSave}>Save</button>
         </Suspense>
       </div>
-    </>
+    </div>
   );
 }
