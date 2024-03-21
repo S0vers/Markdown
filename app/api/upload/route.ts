@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-export const config = {
-  runtime: "edge",
-};
-
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
